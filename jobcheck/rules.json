@@ -1,0 +1,175 @@
+{
+  "score_cap": 100,
+  "bands": [
+    {"name": "Low", "max": 24},
+    {"name": "Medium", "max": 54},
+    {"name": "High", "max": 100}
+  ],
+  "disclaimer": "JobCheck SA is a heuristic aid. It can miss scams and it can flag legitimate adverts. A score is not a guarantee that an advert is safe or fraudulent.",
+  "next_steps": [
+    "Verify the employer on the CIPC company search before you share documents or money. Look up the registered name, not only a logo, a WhatsApp display name, or an email signature. The public search is on CIPC eServices.",
+    "Never pay a fee, deposit, starter-kit cost, or registration charge to be hired, interviewed, or placed on a learnership. A legitimate employer pays you.",
+    "Do not send your ID number, a copy of your ID, bank details, or a SARS tax number before you have verified the company and attended a real interview.",
+    "If you have already paid or shared banking details, contact your bank at once and report the matter to the South African Police Service (SAPS). Banking-related fraud can also be reported to SABRIC, the South African Banking Risk Information Centre.",
+    "Prefer the company's own careers address or a published switchboard. Treat WhatsApp-only, Telegram-only, and free-mail recruiters as unverified until you can tie them to a registered business."
+  ],
+  "rules": [
+    {
+      "id": "upfront_fees",
+      "name": "Upfront fees",
+      "weight": 60,
+      "explanation": "The ad asks you to pay to be hired. Training, admin, registration, uniform, medical, or starter-kit fees are a common South African job scam. A real employer does not charge you to start work.",
+      "patterns": [
+        "(?i)\\b(?:training|admin(?:istration)?|registration|uniform|medical|processing|application|enrolment|enrollment|starter)[\\s-]+fees?\\b",
+        "(?i)\\b(?:up-?front|advance)\\s+(?:fee|payment|deposit)s?\\b",
+        "(?i)\\b(?:fee|deposit)s?\\s+(?:of\\s+)?R\\s?{amount}\\b",
+        "(?i)\\bpay\\s+R\\s?({amount})(?!\\s*(?:\\d|[.,]\\d))(?!\\s*(?:per|a|/)\\s*(?:month|hour|annum|year|week|pm)\\b)",
+        "(?i)\\b(?:must|need to|required to|have to)\\s+pay\\s+(?:a|an|the)\\b",
+        "(?i)\\b(?:buy|purchase|pay for)\\b[^\\n]{0,40}\\bstarter kits?\\b",
+        "(?i)\\bstarter kits?\\b[^\\n]{0,40}\\bR\\s?{amount}\\b"
+      ],
+      "skip_sentence": "(?i)\\b(?:never|do not|don'?t|will not|won'?t|not required|no fees?|without (?:a |any )?fees?)\\b"
+    },
+    {
+      "id": "sensitive_documents",
+      "name": "ID, bank, or SARS details",
+      "weight": 55,
+      "explanation": "The ad asks for an ID number, a copy of your ID, bank details, or a SARS tax number. Those details are abused for identity fraud and do not belong in an application before you have verified the employer and been interviewed.",
+      "patterns": [
+        "(?i)\\b(?:send|provide|submit|forward|share|email|attach|upload|whatsapp)\\b[^\\n]{0,90}\\b(?:(?:your\\s+)?(?:id|identity)\\s+number|copy\\s+of\\s+(?:your\\s+)?(?:id|identity(?:\\s+document)?)|bank(?:ing)?\\s+details|bank\\s+account(?:\\s+number)?|account\\s+number|sars(?:\\s+tax)?\\s+number|tax\\s+number)\\b",
+        "(?i)\\b(?:(?:id|identity)\\s+number|copy\\s+of\\s+(?:your\\s+)?id|bank(?:ing)?\\s+details|sars(?:\\s+tax)?\\s+number|tax\\s+number)\\b"
+      ],
+      "skip_sentence": "(?i)\\b(?:never|do not|don'?t|will not|won'?t|not required)\\b"
+    },
+    {
+      "id": "reshipping",
+      "name": "Package reshipping",
+      "weight": 60,
+      "explanation": "The ad asks you to receive parcels and send them on. That is the parcel-mule pattern: the goods are often stolen or bought with stolen cards, and the person who reships them can be left to answer for it.",
+      "patterns": [
+        "(?i)\\breship(?:ping|ment)?\\b",
+        "(?i)\\b(?:parcel|package)\\s+mule\\b",
+        "(?i)\\breceive\\s+(?:packages|parcels|goods)\\b[^\\n]{0,80}\\b(?:reship|forward)\\b",
+        "(?i)\\b(?:reship|forward)\\s+(?:packages|parcels|goods)\\b"
+      ]
+    },
+    {
+      "id": "seta_learnership_fee",
+      "name": "SETA learnership fee",
+      "weight": 60,
+      "explanation": "The ad asks you to pay to join a SETA learnership. Real SETA learnerships are funded and often pay the learner a stipend. A fee to enrol is a known scam.",
+      "patterns": [
+        "(?i)\\blearnership\\s+fees?\\b",
+        "(?i)\\bSETA\\b[^\\n]{0,120}\\b(?:(?:training|admin(?:istration)?|registration|processing|medical|enrolment|enrollment)[\\s-]+fees?|pay\\s+R\\s?{amount})\\b",
+        "(?i)\\b(?:(?:training|admin(?:istration)?|registration|processing|medical|enrolment|enrollment)[\\s-]+fees?|pay\\s+R\\s?{amount})\\b[^\\n]{0,120}\\bSETA\\b",
+        "(?i)\\blearnership\\b[^\\n]{0,80}\\b(?:(?:training|admin(?:istration)?|registration|processing)[\\s-]+fees?|pay\\s+R\\s?{amount})\\b",
+        "(?i)\\b(?:(?:training|admin(?:istration)?|registration|processing)[\\s-]+fees?|pay\\s+R\\s?{amount})\\b[^\\n]{0,80}\\blearnership\\b"
+      ],
+      "skip_sentence": "(?i)\\b(?:never|do not|don'?t|will not|won'?t|not required|no fees?|without (?:a |any )?fees?)\\b"
+    },
+    {
+      "id": "crypto_forex",
+      "name": "Crypto or forex trading",
+      "weight": 40,
+      "explanation": "The ad recruits you into crypto or forex trading. Fake trading jobs and funded-account schemes are a common way to take fees or collect identity documents.",
+      "patterns": [
+        "(?i)\\bforex\\b",
+        "(?i)\\bcrypto(?:currency)?\\b[^\\n]{0,60}\\b(?:trad(?:e|ing|er)|job|role|desk|team|hiring|vacancy|position)\\b",
+        "(?i)\\b(?:trad(?:e|ing|er)|job|role|desk|hiring)\\b[^\\n]{0,60}\\bcrypto(?:currency)?\\b"
+      ]
+    },
+    {
+      "id": "unrealistic_pay",
+      "name": "Unrealistic pay",
+      "weight": 35,
+      "explanation": "The pay on offer is far above a normal wage for the work described, such as thousands of rand a day, or a high salary paired with no experience. Inflated pay is a common lure. Daily rates for scarce professional locum work can also match, so read the rest of the ad.",
+      "patterns": [],
+      "amount_checks": [
+        {
+          "pattern": "(?i)\\bR\\s?({amount})\\s*(?:per|a|/)\\s*day\\b",
+          "minimum": 2000
+        },
+        {
+          "pattern": "(?i)\\bno experience\\b[^\\n]{0,120}?\\bR\\s?({amount})\\b",
+          "minimum": 25000
+        },
+        {
+          "pattern": "(?i)\\bR\\s?({amount})\\b[^\\n]{0,120}?\\bno experience\\b",
+          "minimum": 25000
+        }
+      ]
+    },
+    {
+      "id": "guaranteed_job",
+      "name": "Guaranteed job",
+      "weight": 30,
+      "explanation": "The ad promises a job, income, or 100% placement. Legitimate employers interview people. They do not guarantee employment in the advert.",
+      "patterns": [
+        "(?i)\\b100\\s*%\\s*placement\\b",
+        "(?i)\\bguaranteed\\s+(?:job|employment|placement|income|position|work)\\b",
+        "(?i)\\bjob\\s+guarantee\\b",
+        "(?i)\\bplacement\\s+guarantee\\b"
+      ]
+    },
+    {
+      "id": "messenger_contact",
+      "name": "WhatsApp or Telegram contact",
+      "weight": 25,
+      "explanation": "The ad uses WhatsApp or Telegram as a contact channel. Scam recruiters prefer those apps because a chat is harder to tie to a registered company than a switchboard or a company domain. A real employer that also publishes a WhatsApp line can match this rule.",
+      "patterns": [
+        "(?i)\\bwhats?\\s?app\\b",
+        "(?i)\\bwa\\.me\\b",
+        "(?i)\\btelegram\\b",
+        "(?i)\\bt\\.me/"
+      ]
+    },
+    {
+      "id": "vague_company",
+      "name": "Vague company or no address",
+      "weight": 25,
+      "explanation": "The ad does not give you a traceable employer. A withheld company name, a confidential location, or no street address makes a CIPC search much harder.",
+      "patterns": [
+        "(?i)\\bcompany name (?:is |will be )?(?:withheld|confidential|undisclosed|confirmed later|to be (?:advised|confirmed|disclosed))\\b",
+        "(?i)\\b(?:undisclosed|confidential)\\s+(?:company|employer)\\b",
+        "(?i)\\b(?:leading|reputable|well[- ]known)\\s+(?:company|firm|employer|organisation|organization)\\b",
+        "(?i)\\blocation\\s*:\\s*(?:confidential|undisclosed|tbd|n/?a|various)\\b",
+        "(?i)\\bno (?:physical |office |street )?address\\b"
+      ],
+      "missing": {
+        "min_length": 180,
+        "snippet": "No registered company name or street address was found.",
+        "patterns": [
+          "(?i)\\(\\s*pty\\s*\\)\\s*ltd\\b|\\bpty\\s*ltd\\b",
+          "(?i)\\b(?:street|road|avenue|drive|office park|p\\.?o\\.?\\s*box)\\b",
+          "(?i)\\b(?:johannesburg|cape town|durban|pretoria|sandton|soweto|polokwane|bloemfontein|nelspruit|mbombela|gqeberha|mthatha|pietermaritzburg|east london|kimberley|rustenburg)\\b"
+        ]
+      }
+    },
+    {
+      "id": "free_email",
+      "name": "Free email address",
+      "weight": 15,
+      "explanation": "The recruiter uses a free inbox such as Gmail, Yahoo, Outlook (including Hotmail and Live), or webmail. A company hiring under its own name usually writes from its own domain, which you can compare with the company website.",
+      "patterns": [
+        "(?i)\\b[a-z0-9._%+-]+@(?:gmail\\.com|yahoo\\.com|yahoo\\.co\\.za|ymail\\.com|outlook\\.com|hotmail\\.com|live\\.com|webmail\\.[a-z0-9.-]+)\\b"
+      ]
+    },
+    {
+      "id": "urgency_pressure",
+      "name": "Urgency and pressure",
+      "weight": 15,
+      "explanation": "The ad pushes you to act immediately, for example with limited spots or a same-day start. Pressure is used to stop you checking the employer. On its own this is a weak signal, because ordinary vacancies can also be urgent.",
+      "patterns": [
+        "(?i)\\blimited\\s+spots?\\b",
+        "(?i)\\blimited\\s+(?:space|spaces|seats|positions|vacancies)\\b",
+        "(?i)\\bstart\\s+today\\b",
+        "(?i)\\bact\\s+now\\b",
+        "(?i)\\bonly\\s+\\d+\\s+(?:spots?|seats?|positions?|vacancies|people)\\s+left\\b",
+        "(?i)\\bfirst[- ]come[- ]first[- ]served\\b",
+        "(?i)\\blast\\s+chance\\b",
+        "(?i)\\bdon'?t\\s+miss\\s+(?:out|this)\\b",
+        "(?i)\\bclosing\\s+today\\b"
+      ]
+    }
+  ]
+}
